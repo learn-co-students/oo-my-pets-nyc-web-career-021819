@@ -1,19 +1,22 @@
+require "pry"
+
 class Owner
 
   @@all = []
 
- attr_accessor :pets
- attr_reader :name, :species
+ attr_accessor :pets, :name
+ attr_reader:species
 
   def initialize(species)
     @pets = {fishes: [], cats: [], dogs: []}
+    @name = name
     @species = species
     @@all << self
   end
 
   def buy_cat(name)
     new_cat = Cat.new(name)
-    @pets[cats] << new_cat
+    @pets[:cats] << new_cat
   end
 
   def buy_dog(name)
@@ -23,7 +26,7 @@ class Owner
 
   def buy_fish(name)
     new_fish = Fish.new(name)
-    @pets[:fish] << new_fish
+    @pets[:fishes] << new_fish
   end
 
   def self.all
@@ -38,11 +41,39 @@ class Owner
     @@all = []
   end
 
-  def species
-    @species
+  def say_species
+    "I am a #{@species}."
+  end
+
+  def walk_dogs
+    @pets[:dogs].each do |dog|
+      dog.mood = "happy"
+    end
+  end
+
+  def play_with_cats
+    @pets[:cats].each do |cat|
+      cat.mood = "happy"
+    end
+  end
+
+  def feed_fish
+    @pets[:fishes].each do |fish|
+      fish.mood = "happy"
+    end
+  end
+
+  def sell_pets
+    @pets.each do |animal, pets|
+      pets.each do |pet|
+        pet.mood = "nervous"
+      end
+    end
+    @pets = {fishes: [], cats: [], dogs: []}
   end
 
   def list_pets
+    "I have #{@pets[:fishes].length} fish, #{@pets[:dogs].length} dog(s), and #{@pets[:cats].length} cat(s)."
   end
 
 end
